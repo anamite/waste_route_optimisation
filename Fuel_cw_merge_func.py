@@ -94,8 +94,8 @@ def compute_fuel_for_cw(cw_file='CW.xlsx', perform_file='Perform.xlsx', output_f
 
 if __name__ == "__main__":
     compute_fuel_for_cw(
-        cw_file=r'latilong.xlsx',
-        perform_file=r'updated_filtered_matching_data.xlsx',
+        cw_file=r'Output/cw_cleaned.xlsx',
+        perform_file=r'Output/perform_datetime.xlsx',
         output_file='CW_Updated.xlsx'
     )
 

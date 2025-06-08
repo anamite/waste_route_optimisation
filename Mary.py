@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the Excel file
-df = pd.read_excel(r"C:\Users\anand\Downloads\CW-export_2.25.xlsx")
+df = pd.read_excel(r"Data\CW-export_2.25.xlsx")
 
 # Clean up column names
 df.columns = df.columns.str.strip()
@@ -13,13 +13,26 @@ filtered_df = df[df['containerType'].astype(str).str.contains('FLC|ARC', na=Fals
 
 # Define the columns you want to extract
 columns_to_extract = [
-    'date', 'start', 'end', 'truck', 'clientAddress',
-    'truckId', 'containerType', 'completionLongitude', 'completionLatitude', 'tourNo'
+    'date', 'start', 'end', 'duration', 'employeeIds', 'drivers', 'area', 'truck', 'orderId', 'orderLink',
+    'contractId', 'siteId', 'costcenter', 'LE-KST', 'trailerCostcenter', 'costcenter-lohn', 'logisticProcess',
+    'timeAtDisposalSite', 'timeAtClient', 'enteredClientArea', 'leftClientArea', 'enterDisposalSite',
+    'leaveDisposalSite', 'estimatedDuration', 'breakDuration', 'issueWaitingTimes', 'resume', 'paused', 'tasks',
+    'issues', 'clientAddress', 'disposalSite', 'summDistance', 'credit', 'la', 'bs', 'wds_id', 'timeDifference',
+    'allRestingTime', 'allReportedResting', 'freeTimeWithoutTransport', 'restingOverrideDifference', 'summMoveTime',
+    'summStandTime', 'summCovered', 'nonOrderTime', 'approvalTime', 'netWorkingHours', 'startWorking', 'endWorking',
+    'employeeInternalIds', 'kaba-export', 'workdayApproved', 'approvalNote', 'dayCredit', 'reportedRestingTruncated',
+    'noOfOrders', 'truckId', 'deliveryId', 'contractInternalId', 'siteInternalId', 'vehicleType', 'xuId', 'deliverId',
+    'orderInternalId', 'weight', 'wasteType', 'containerType', 'initiator', 'customersInternalReference',
+    'completionLongitude', 'completionLatitude', 'leftLifterCount', 'rightLifterCount', '4wheelActionCount',
+    'tourNo', 'tourDesc'
 ]
+
 
 # Extract just those columns from the filtered data
 extracted_df = filtered_df[columns_to_extract]
 print(extracted_df.head())
+# i want to print all the colms for first 10
+print(extracted_df.head(10).to_string())  # Print all columns for the first 10 rows
 
 import requests
 from requests.structures import CaseInsensitiveDict
@@ -27,7 +40,8 @@ from requests.structures import CaseInsensitiveDict
 
 # Function to get coordinates from the Geoapify API
 def get_coordinates(address):
-    url = f"https://api.geoapify.com/v1/geocode/search?text={address}&apiKey=6e3e795ea3d74df3ba5f0f9f00de2e80"
+    url = f"https://api.geoapify.com/v1/geocode/search?text={address}&apiKey=786433156f5042d68cd42f0408e57c3f"
+    # url = f"https://api.geoapify.com/v1/geocode/search?text={address}&apiKey=6e3e795ea3d74df3ba5f0f9f00de2e80"
     headers = CaseInsensitiveDict()
     headers["Accept"] = "application/json"
     response = requests.get(url, headers=headers)
@@ -71,5 +85,5 @@ for index, row in extracted_df.iterrows():
 
 # Save the updated DataFrame to a new file
 latilong = extracted_df
-latilong.to_excel(r"latilong.xlsx", index=False)
+latilong.to_excel(r"Output/latilong.xlsx", index=False)
 
